@@ -1,0 +1,21 @@
+{
+  "name": "cdro/telegram-bot-core",
+  "description": "Simple Telegram Bot Core",
+  "type": "library",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Tizian Schmidlin",
+      "role": "Project Owner"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cdro\\TelegramBotCore\\": "src/"
+    }
+  }
+}
