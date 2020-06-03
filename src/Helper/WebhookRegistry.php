@@ -23,6 +23,8 @@ class WebhookRegistry
     {
         $input = file_get_contents('php://input');
 
-        $this->registry->handle($input->message);
+        $this->registry->process($input->message);
+
+        $this->registry->save();
     }
 }

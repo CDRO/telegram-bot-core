@@ -22,12 +22,6 @@ abstract class AbstractRegistry {
     public function __construct(Client $client) {
         $this->client = $client;
     }
-
-    final public function run() {
-        if(!$this->isLoaded) {
-            throw new \RuntimeException('Ensure you load up your data before running the registry!');
-        }
-    }
     
     /**
      * Load up the data
