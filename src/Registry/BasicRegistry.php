@@ -81,4 +81,9 @@ class BasicRegistry extends AbstractRegistry
         file_put_contents($this->saveFile, json_encode($this->data));
         return $this;
     }
+
+    public function get()
+    {
+        return clone $this->data;
+    }
 }

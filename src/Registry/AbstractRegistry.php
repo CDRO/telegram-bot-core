@@ -37,4 +37,9 @@ abstract class AbstractRegistry {
      * Process a message
      */
     abstract function process($message): self;
+
+    /**
+     * Get the saved data
+     */
+    abstract function get();
 }
