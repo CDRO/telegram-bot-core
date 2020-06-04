@@ -22,7 +22,7 @@ class WebhookRegistry
     public function handle()
     {
         $input = file_get_contents('php://input');
-
+        $input = json_decode($input);
         $this->registry->process($input->message);
 
         $this->registry->save();
