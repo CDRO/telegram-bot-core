@@ -1,6 +1,6 @@
 <?php
 
-namespace Cdro\TelegramBotCore;
+namespace Cdro\TelegramBotCore\Client;
 
 use GuzzleHttp\Client as GuzzleClient;
 
