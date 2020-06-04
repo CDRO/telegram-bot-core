@@ -4,7 +4,7 @@ namespace Cdro\TelegramBotCore\Responder;
 
 use Cdro\TelegramBotCore\Client\Client;
 
-class AbstractResponder implements ResponderInterface
+abstract class AbstractResponder implements ResponderInterface
 {
     /**
      * @var Client
