@@ -26,20 +26,21 @@ abstract class AbstractRegistry {
     /**
      * Load up the data
      */
-    abstract function load(): self;
+    abstract public function load();
 
     /**
      * Save the data
      */
-    abstract function save(): self;
+    abstract public function save();
 
     /**
      * Process a message
+     * @param $message
      */
-    abstract function process($message): self;
+    abstract public function process($message);
 
     /**
      * Get the saved data
      */
-    abstract function get();
+    abstract public function get();
 }

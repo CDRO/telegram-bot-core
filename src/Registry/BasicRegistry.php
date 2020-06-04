@@ -20,10 +20,13 @@ class BasicRegistry extends AbstractRegistry
     public function __construct(Client $client, string $saveFile = '')
     {
         $this->client = $client;
-        $this->saveFile = $saveFile
+        $this->saveFile = $saveFile;
     }
 
-    public function load(): self
+    /**
+     * @return $this|BasicRegistry
+     */
+    public function load()
     {
         $this->data = json_decode(file_get_contents($this->saveFile));
         $this->isLoaded = true;
@@ -33,13 +36,14 @@ class BasicRegistry extends AbstractRegistry
     /**
      * Process a message
      * @param mixed $message
+     * @param $this|BasicRegistry
      */
     public function process($message)
     {
-        if(array_key_exists('entities', $message) && is_array($messages->entities)) {
+        if(array_key_exists('entities', $message) && is_array($message->entities)) {
             $from = $message->from;
             $chatId = $message->chat->id;
-
+            $text = $message->text;
             foreach($message->entities as $entity) {
                 if($entity->type === 'bot_command') {
                     if(!empty($this->data->{$chatId})) {
@@ -76,12 +80,18 @@ class BasicRegistry extends AbstractRegistry
         }
     }
 
-    public function save(): self
+    /**
+     * @return $this|BasicRegistry
+     */
+    public function save()
     {
         file_put_contents($this->saveFile, json_encode($this->data));
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function get()
     {
         return clone $this->data;
