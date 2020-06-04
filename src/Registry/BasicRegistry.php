@@ -30,7 +30,7 @@ class BasicRegistry extends AbstractRegistry
     {
         $tmpData = file_get_contents($this->saveFile);
         if(empty(($this->data = json_decode($tmpData)))) {
-            $this->data = [];
+            $this->data = new \stdClass();
         }
         $this->isLoaded = true;
         return $this;
