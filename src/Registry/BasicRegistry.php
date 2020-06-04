@@ -28,7 +28,10 @@ class BasicRegistry extends AbstractRegistry
      */
     public function load()
     {
-        $this->data = json_decode(file_get_contents($this->saveFile));
+        $tmpData = file_get_contents($this->saveFile);
+        if(empty(($this->data = json_decode($tmpData)))) {
+            $this->data = [];
+        }
         $this->isLoaded = true;
         return $this;
     }
