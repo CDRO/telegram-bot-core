@@ -3,9 +3,13 @@
 namespace Cdro\TelegramBotCore\Registry;
 
 use Cdro\TelegramBotCore\Client\Client;
+use Cdro\TelegramBotCore\Responder\AbstractResponder;
+use Cdro\TelegramBotCore\Responder\ResponderInterface;
 
 class BasicRegistry extends AbstractRegistry
 {
+
+
     /**
      * Path where to store the data
      * @var string
@@ -13,13 +17,18 @@ class BasicRegistry extends AbstractRegistry
     private $saveFile = '';
 
     /**
-     * Initialize the class and make sure that Client and save path are properly set
-     * @param Client $client
-     * @param string $savePath
+     * @var AbstractResponder
      */
-    public function __construct(Client $client, string $saveFile = '')
+    private $responder;
+
+    /**
+     * Initialize the class and make sure that Client and save path are properly set
+     * @param AbstractResponder $responder
+     * @param string $saveFile
+     */
+    public function __construct(AbstractResponder $responder, string $saveFile = '')
     {
-        $this->client = $client;
+        $this->responder = $responder;
         $this->saveFile = $saveFile;
     }
 
@@ -52,29 +61,15 @@ class BasicRegistry extends AbstractRegistry
                     if(!empty($this->data->{$chatId})) {
                         // Prevent double registration and inform the user that they are already registered
                         if($text === '/start') {
-                            $this->client->sendMessage($chatId . ':' . $message->message_id, 'You are already registered.');
+                            $this->responder->alreadyRegistered($message);
                             exit;
                         } elseif($text === '/stop') {
                             unset($this->data->{$chatId});
-                            $this->client->sendMessage(
-                                $chatId . ':' . $message->message_id,
-                                sprintf(
-                                    'Hello %s %s, you have been succesfully removed form our user base.', 
-                                    $from->first_name, 
-                                    $from->last_name
-                                    )
-                                );
+                            $this->responder->removed($message);
                         }
                     } elseif($text === '/start') {
                         $this->data->{$chatId} = $from;
-                        $this->client->sendMessage(
-                            $chatId . ':' . $message->message_id,
-                            sprintf(
-                                'Hello %s %s, you are now able to receive 2FA token through Telegram.', 
-                                $from->first_name, 
-                                $from->last_name
-                                )
-                        );
+                        $this->responder->newlyRegistered($message);
                     } else {
                         exit;
                     }
