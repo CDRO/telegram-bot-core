@@ -13,10 +13,12 @@ class Client extends GuzzleClient{
      * @param string $text The message
      */
     public function sendMessage($chatId, $text) {
+        list($chatId, $messageId) = explode(':', $chatId);
         $this->request('GET', 'sendMessage', [
             'query' => [
                 'chat_id' => $chatId,
-                'text' => $text
+                'text' => $text,
+                'reply_to_message_id' => $messageId,
             ]
         ]);
     }

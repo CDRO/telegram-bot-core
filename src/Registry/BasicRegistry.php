@@ -52,12 +52,12 @@ class BasicRegistry extends AbstractRegistry
                     if(!empty($this->data->{$chatId})) {
                         // Prevent double registration and inform the user that they are already registered
                         if($text === '/start') {
-                            $this->client->sendMessage($chatId, 'You are already registered.');
+                            $this->client->sendMessage($chatId . ':' . $message->message_id, 'You are already registered.');
                             exit;
                         } elseif($text === '/stop') {
                             unset($this->data->{$chatId});
                             $this->client->sendMessage(
-                                $chatId, 
+                                $chatId . ':' . $message->message_id,
                                 sprintf(
                                     'Hello %s %s, you have been succesfully removed form our user base.', 
                                     $from->first_name, 
@@ -68,7 +68,7 @@ class BasicRegistry extends AbstractRegistry
                     } elseif($text === '/start') {
                         $this->data->{$chatId} = $from;
                         $this->client->sendMessage(
-                            $chatId, 
+                            $chatId . ':' . $message->message_id,
                             sprintf(
                                 'Hello %s %s, you are now able to receive 2FA token through Telegram.', 
                                 $from->first_name, 
